@@ -1,0 +1,1136 @@
+/* ==========================================================================
+   STYLE: MÓN QUÀ SINH NHẬT TỪ MÈO MILE 🐾🎂
+   Style: Comic / Manga Warm Vanilla aesthetic (Strictly NO pink background)
+   Mobile-First Optimization
+   ========================================================================== */
+
+:root {
+  /* Warm Comic Palette (Zero Pink) */
+  --bg-canvas: #FAF6EE;
+  --bg-dot: #EADFC9;
+  --bg-card: #FFFFFF;
+  --bg-paper: #FFFDF8;
+  --border-color: #2D2320;
+  --text-main: #2A2421;
+  --text-muted: #6B5E57;
+  
+  /* Comic Accent Colors */
+  --accent-yellow: #FFDE59;
+  --accent-gold: #F59E0B;
+  --accent-orange: #FB923C;
+  --accent-mint: #34D399;
+  --accent-blue: #38BDF8;
+  --wax-red: #B91C1C;
+  --wax-red-dark: #7F1D1D;
+  
+  /* Comic Borders & Shadows */
+  --border-thick: 3px solid var(--border-color);
+  --border-radius-lg: 22px;
+  --border-radius-md: 16px;
+  --border-radius-sm: 10px;
+  --shadow-comic: 4px 4px 0px var(--border-color);
+  --shadow-comic-lg: 6px 6px 0px var(--border-color);
+  --shadow-comic-sm: 2px 2px 0px var(--border-color);
+  --shadow-comic-hover: 2px 2px 0px var(--border-color);
+  
+  /* Fonts */
+  --font-comic: 'Mali', 'Patrick Hand', 'Comfortaa', cursive, -apple-system, sans-serif;
+  --font-display: 'Comfortaa', cursive, sans-serif;
+}
+
+/* ================= CSS RESET & BASE ================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: var(--bg-canvas);
+  background-image: radial-gradient(var(--bg-dot) 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+  color: var(--text-main);
+  font-family: var(--font-comic);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Canvas Confetti */
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ================= TOP CONTROLS (AUDIO TOGGLE) ================= */
+.top-controls {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 100;
+}
+
+.comic-icon-btn {
+  background: var(--bg-card);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-comic-sm);
+  border-radius: 999px;
+  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-comic);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+}
+
+.comic-icon-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px var(--border-color);
+}
+
+.comic-icon-btn.playing {
+  background: var(--accent-yellow);
+  animation: pulse-music 2s infinite ease-in-out;
+}
+
+@keyframes pulse-music {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* ================= MAIN CONTAINER ================= */
+.app-container {
+  width: 100%;
+  max-width: 440px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: transparent;
+  padding: 16px 14px 20px;
+  overflow: hidden;
+}
+
+/* ================= SCENE GENERAL ================= */
+.scene {
+  display: none;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  position: relative;
+  transition: opacity 0.35s ease;
+}
+
+.scene.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* ================= SCENE 1: CAKE WITH DOOR ================= */
+.scene-header {
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.comic-badge {
+  display: inline-block;
+  background: var(--accent-yellow);
+  color: var(--border-color);
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 4px 14px;
+  border: var(--border-thick);
+  border-radius: 999px;
+  box-shadow: var(--shadow-comic-sm);
+  margin-bottom: 8px;
+  transform: rotate(-2deg);
+}
+
+.comic-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-main);
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.05);
+}
+
+.cake-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.cake-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 330px;
+  aspect-ratio: 1 / 1.15;
+  cursor: pointer;
+  filter: drop-shadow(0 14px 18px rgba(45, 35, 32, 0.12));
+  transition: transform 0.2s ease;
+}
+
+.cake-wrapper:hover {
+  transform: scale(1.02);
+}
+
+.cake-wrapper:active {
+  transform: scale(0.98);
+}
+
+.cake-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.5s ease-in-out, transform 0.4s ease;
+  pointer-events: none;
+}
+
+.cake-img.door-closed {
+  opacity: 1;
+  z-index: 2;
+}
+
+.cake-img.door-closed.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cake-img.door-open {
+  opacity: 0;
+  z-index: 1;
+}
+
+.cake-img.door-open.active {
+  opacity: 1;
+  z-index: 3;
+  animation: cake-glow 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes cake-glow {
+  0% { filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.4)); }
+  100% { filter: drop-shadow(0 0 25px rgba(251, 191, 36, 0.8)); }
+}
+
+/* Door Click Area Target */
+.door-tap-target {
+  position: absolute;
+  bottom: 23%;
+  left: 42%;
+  width: 76px;
+  height: 105px;
+  z-index: 10;
+  border-radius: 40px 40px 8px 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tap-pulse {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 222, 89, 0.5);
+  border: 2px dashed var(--border-color);
+  animation: pulse-ring 1.8s infinite ease-out;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+.hand-pointer {
+  font-size: 2rem;
+  z-index: 11;
+  animation: hand-bounce 1s infinite alternate cubic-bezier(0.3, 0.27, 0.07, 1.64);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+@keyframes hand-bounce {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-6px, -10px) scale(1.15); }
+}
+
+.cake-hint-bubble {
+  margin-top: 10px;
+  background: var(--bg-paper);
+  border: var(--border-thick);
+  border-radius: 999px;
+  box-shadow: var(--shadow-comic);
+  padding: 8px 18px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  animation: float-hint 2s infinite ease-in-out;
+}
+
+@keyframes float-hint {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ================= SCENE 2, 3, 4: MILE & COMIC DIALOGUE ================= */
+#scene-dialogue {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  padding-top: 16px;
+}
+
+.dialogue-box-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 20;
+  min-height: 120px;
+}
+
+/* Manga / Comic Speech Bubble */
+.comic-speech-bubble {
+  position: relative;
+  width: 100%;
+  background: var(--bg-card);
+  border: var(--border-thick);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-comic);
+  padding: 16px 18px 14px;
+  margin-bottom: 24px;
+  animation: bubble-pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bubble-pop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.character-name-tag {
+  display: inline-block;
+  background: var(--accent-yellow);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2px 10px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--border-color);
+  margin-bottom: 6px;
+}
+
+.bubble-text {
+  font-size: 1.08rem;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--text-main);
+  min-height: 52px;
+}
+
+/* Comic Bubble Tail pointing down to Mile */
+.bubble-tail {
+  position: absolute;
+  bottom: -15px;
+  left: 36%;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 15px solid var(--border-color);
+}
+
+.bubble-tail::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: -9px;
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 12px solid var(--bg-card);
+}
+
+/* Character Stage (Mile's poses) */
+.character-stage {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  min-height: 290px;
+  max-height: 380px;
+  margin-bottom: 14px;
+}
+
+.cat-character-img {
+  max-height: 330px;
+  width: auto;
+  max-width: 95%;
+  object-fit: contain;
+  display: none;
+  filter: drop-shadow(0 10px 14px rgba(45, 35, 32, 0.12));
+}
+
+.cat-character-img.active {
+  display: block;
+  animation: cat-appear 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes cat-appear {
+  0% { transform: scale(0.85) translateY(20px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Floating animation for Mile */
+.cat-character-img.breathing {
+  animation: cat-idle 3s infinite ease-in-out alternate;
+}
+
+@keyframes cat-idle {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+/* Actions & Buttons */
+.actions-container {
+  width: 100%;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 30;
+}
+
+.action-group {
+  display: none;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+
+.action-group.active {
+  display: flex;
+}
+
+/* Comic Button Styles */
+.comic-btn {
+  font-family: var(--font-comic);
+  font-size: 1rem;
+  font-weight: 700;
+  border: var(--border-thick);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-comic);
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.2s ease;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.comic-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0px var(--border-color);
+}
+
+.primary-btn {
+  background: var(--accent-yellow);
+  color: var(--border-color);
+  min-width: 150px;
+}
+
+.primary-btn:hover {
+  background: #FFE885;
+}
+
+.celebration-btn {
+  background: var(--accent-mint);
+  color: var(--border-color);
+}
+
+.outline-btn {
+  background: var(--bg-paper);
+  color: var(--text-main);
+}
+
+.bounce-btn {
+  animation: button-bounce 1.6s infinite ease-in-out;
+}
+
+@keyframes button-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.pulse-glow {
+  animation: glow-pulse 1.8s infinite ease-in-out;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 4px 4px 0px var(--border-color), 0 0 0px rgba(245, 158, 11, 0); }
+  50% { box-shadow: 4px 4px 0px var(--border-color), 0 0 16px rgba(245, 158, 11, 0.7); }
+}
+
+/* Evasive Running Button */
+.evasive-btn {
+  background: #F1EFEA;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28), top 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), left 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.evasive-btn.escaping {
+  position: absolute;
+  z-index: 50;
+  box-shadow: 4px 4px 0px var(--border-color);
+  animation: evasive-wiggle 0.35s ease;
+}
+
+@keyframes evasive-wiggle {
+  0% { transform: scale(1.1) rotate(-6deg); }
+  50% { transform: scale(1.15) rotate(6deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.evasive-btn.poofed {
+  animation: poof-disappear 0.4s forwards ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes poof-disappear {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3) rotate(15deg); opacity: 0.7; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+/* ================= SCENE 5: FLOWER ZOOM & MINI MILE ================= */
+#scene-5 {
+  justify-content: space-between;
+  padding-top: 4px;
+  overflow: visible;
+}
+
+.flower-zoom-stage {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+}
+
+/* Big Bouquet with overflow & zoom effect */
+.floating-flower-wrapper {
+  position: relative;
+  width: calc(100% + 46px);
+  max-width: 480px;
+  margin-left: -23px;
+  margin-right: -23px;
+  cursor: pointer;
+  margin-top: -6px;
+  transform-origin: center center;
+  transform: scale(1.16);
+  filter: drop-shadow(0 18px 26px rgba(45, 35, 32, 0.2));
+  transition: transform 0.25s ease;
+}
+
+.floating-flower-wrapper:hover {
+  transform: scale(1.19);
+}
+
+.floating-flower-wrapper:active {
+  transform: scale(1.12);
+}
+
+.floating-flower-wrapper.zoom-bloom {
+  animation: flower-bloom-zoom 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes flower-bloom-zoom {
+  0% {
+    transform: scale(0.2) translateY(120px);
+    opacity: 0;
+    filter: brightness(1.3) drop-shadow(0 0 50px rgba(251, 191, 36, 0.9));
+  }
+  45% {
+    transform: scale(1.28) translateY(-14px);
+    opacity: 1;
+    filter: brightness(1.1) drop-shadow(0 22px 35px rgba(45, 35, 32, 0.28));
+  }
+  75% {
+    transform: scale(1.12) translateY(4px);
+    filter: drop-shadow(0 18px 26px rgba(45, 35, 32, 0.2));
+  }
+  100% {
+    transform: scale(1.16) translateY(0);
+    opacity: 1;
+    filter: drop-shadow(0 18px 26px rgba(45, 35, 32, 0.2));
+  }
+}
+
+.floating-flower-wrapper.floating {
+  animation: flower-float 3.5s infinite ease-in-out;
+}
+
+@keyframes flower-float {
+  0%, 100% { transform: scale(1.16) translateY(0) rotate(0deg); }
+  50% { transform: scale(1.16) translateY(-9px) rotate(1deg); }
+}
+
+.flower-big-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Exact Letter Target & Animated Pointing Hand on Bouquet */
+.letter-target-indicator {
+  position: absolute;
+  left: 54%;
+  top: 15%;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.wax-target-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 58px;
+  height: 58px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 3px dashed var(--wax-red);
+  background: rgba(255, 222, 89, 0.45);
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.7);
+  animation: halo-pulse 1.6s infinite ease-out;
+}
+
+@keyframes halo-pulse {
+  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.95; }
+  100% { transform: translate(-50%, -50%) scale(1.35); opacity: 0; }
+}
+
+.pointing-hand-wrapper {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: finger-tap 0.9s infinite alternate cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.pointing-finger {
+  font-size: 2.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.35));
+  margin-bottom: 2px;
+}
+
+.pointing-cue-tag {
+  background: var(--wax-red);
+  color: #FFFFFF;
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow-comic-sm);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+@keyframes finger-tap {
+  0% { transform: translateX(-50%) translateY(8px) scale(0.95); }
+  100% { transform: translateX(-50%) translateY(-10px) scale(1.15); }
+}
+
+/* Mini Guide Mile at Corner */
+.mini-guide-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 0 4px;
+  z-index: 10;
+  animation: mini-guide-enter 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.3s both;
+}
+
+@keyframes mini-guide-enter {
+  0% { transform: translateY(35px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.mini-guide-cat {
+  width: 105px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.mini-cat-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 10px rgba(45, 35, 32, 0.16));
+  animation: mini-cat-bounce 2s infinite ease-in-out;
+}
+
+@keyframes mini-cat-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(-2deg); }
+}
+  50% { transform: translateY(-6px) rotate(-2deg); }
+}
+
+.mini-speech-bubble {
+  position: relative;
+  flex: 1;
+  background: var(--bg-card);
+  border: var(--border-thick);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-comic);
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.mini-tail {
+  position: absolute;
+  bottom: 14px;
+  left: -12px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 12px solid var(--border-color);
+}
+
+.mini-tail::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: -12px;
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 9px solid var(--bg-card);
+}
+
+/* ================= SCENE 6: LETTER MODAL & UNVEILING ================= */
+.letter-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(35, 28, 26, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  padding: 16px;
+}
+
+.letter-modal-backdrop.open {
+  display: flex;
+  opacity: 1;
+}
+
+.letter-modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: -14px;
+  right: 0px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: var(--border-thick);
+  box-shadow: var(--shadow-comic-sm);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  transition: transform 0.15s ease;
+}
+
+.modal-close-btn:active {
+  transform: scale(0.9);
+}
+
+/* Envelope Assembly */
+.envelope-assembly {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: height 0.5s ease;
+}
+
+.envelope-assembly.unfolded {
+  height: auto;
+  max-height: 84vh;
+}
+
+.envelope-back {
+  position: absolute;
+  bottom: 0;
+  width: 320px;
+  height: 200px;
+  background: #EADDC9;
+  border: var(--border-thick);
+  border-radius: 12px;
+  box-shadow: var(--shadow-comic-lg);
+  z-index: 1;
+  transition: opacity 0.4s ease;
+}
+
+.envelope-front-pocket {
+  position: absolute;
+  bottom: 0;
+  width: 320px;
+  height: 140px;
+  background: #DFD0B8;
+  border-left: var(--border-thick);
+  border-right: var(--border-thick);
+  border-bottom: var(--border-thick);
+  border-radius: 0 0 12px 12px;
+  z-index: 5;
+  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 50px;
+  width: 320px;
+  height: 110px;
+  background: #D5C4AA;
+  border-top: var(--border-thick);
+  border-left: var(--border-thick);
+  border-right: var(--border-thick);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+  z-index: 6;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Red Wax Seal */
+.wax-seal {
+  position: absolute;
+  top: 130px;
+  width: 62px;
+  height: 62px;
+  background: radial-gradient(circle, var(--wax-red) 50%, var(--wax-red-dark) 90%);
+  border: 3px solid #551212;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  animation: wax-pulse 1.8s infinite ease-in-out;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.wax-inner {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #FEE2E2;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  letter-spacing: 1px;
+}
+
+.wax-hint {
+  position: absolute;
+  bottom: -32px;
+  background: var(--bg-paper);
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow-comic-sm);
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+@keyframes wax-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* Unfolding Animation Sequence */
+.envelope-assembly.opening .wax-seal {
+  animation: wax-break 0.4s forwards ease;
+}
+
+@keyframes wax-break {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25) rotate(15deg); }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+.envelope-assembly.opening .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+/* Parchment Letter Paper */
+.letter-paper {
+  position: absolute;
+  bottom: 10px;
+  width: 94%;
+  max-width: 390px;
+  max-height: 80vh;
+  background: var(--bg-paper);
+  border: var(--border-thick);
+  border-radius: 14px;
+  box-shadow: var(--shadow-comic-lg);
+  padding: 24px 20px 20px;
+  z-index: 3;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  transition: opacity 0.5s ease 0.4s, transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.4s;
+  scrollbar-width: thin;
+}
+
+.envelope-assembly.unfolded .letter-paper {
+  position: relative;
+  bottom: auto;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  z-index: 20;
+}
+
+.envelope-assembly.unfolded .envelope-back,
+.envelope-assembly.unfolded .envelope-front-pocket,
+.envelope-assembly.unfolded .envelope-flap,
+.envelope-assembly.unfolded .wax-seal {
+  display: none;
+}
+
+/* Letter Content Styling */
+.letter-inner-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.letter-decorative-corner {
+  position: absolute;
+  font-size: 1.4rem;
+  color: var(--accent-gold);
+  line-height: 1;
+}
+
+.letter-decorative-corner.top-left {
+  top: -8px;
+  left: -6px;
+}
+
+.letter-decorative-corner.top-right {
+  top: -8px;
+  right: -6px;
+  transform: scaleX(-1);
+}
+
+.letter-header {
+  text-align: center;
+  margin-bottom: 16px;
+  border-bottom: 2px dashed #E2D9C8;
+  padding-bottom: 12px;
+}
+
+.letter-postmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #F4EEDB;
+  border: 1.5px solid var(--border-color);
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: var(--text-muted);
+}
+
+.letter-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #D97706;
+  margin: 4px 0;
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.06);
+}
+
+.letter-divider {
+  color: var(--accent-gold);
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+}
+
+.letter-body-text {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.letter-salutation {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.letter-signature {
+  margin-top: 14px;
+  text-align: right;
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sign-from {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.sign-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.sign-ps {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.letter-bottom-actions {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ================= RESPONSIVE MOBILE STYLES ================= */
+@media (max-width: 380px) {
+  .comic-title {
+    font-size: 1.25rem;
+  }
+  .bubble-text {
+    font-size: 0.98rem;
+  }
+  .comic-btn {
+    padding: 10px 16px;
+    font-size: 0.92rem;
+  }
+  .envelope-back, .envelope-front-pocket, .envelope-flap {
+    width: 280px;
+  }
+  .letter-paper {
+    padding: 18px 14px;
+  }
+  .letter-title {
+    font-size: 1.35rem;
+  }
+  .letter-body-text {
+    font-size: 0.92rem;
+  }
+}
+
+/* Desktop Preview Emulation */
+@media (min-width: 481px) {
+  .app-container {
+    border: var(--border-thick);
+    border-radius: 32px;
+    box-shadow: 0 20px 40px rgba(45, 35, 32, 0.12), 8px 8px 0px var(--border-color);
+    background: var(--bg-canvas);
+    margin: 20px auto;
+    min-height: 680px;
+    height: 94vh;
+    max-height: 840px;
+  }
+}
