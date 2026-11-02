@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Món Quà Sinh Nhật Từ Mèo Mile 🐾🎂</title>
+  
+  <!-- Comic Fonts supporting full Vietnamese -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700;800&family=Mali:ital,wght@0,500;0,600;0,700;1,600&family=Patrick+Hand&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Audio Controls & Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+  
+  <!-- Background Music: Bản Piano Happy Birthday duy nhất (âm lượng nhỏ nhẹ, êm dịu) -->
+  <audio id="bgm-music" src="assets/audio/happy-birthday.mp3" loop preload="auto"></audio>
+
+  <!-- Main Mobile App Wrapper -->
+  <main class="app-container">
+    
+    <!-- ================= SCENE 1: BÁNH SINH NHẬT CÓ CÁNH CỬA ================= -->
+    <section id="scene-1" class="scene active">
+      <div class="scene-header">
+        <div class="comic-badge">✨ Cốc cốc cốc! ✨</div>
+        <h1 class="comic-title">Có ai ở nhà không ta?</h1>
+      </div>
+
+      <div class="cake-stage" id="cake-container">
+        <!-- Cake with closed door (banh-1.png) and open door (banh-2.png) -->
+        <div class="cake-wrapper" id="cake-interactive">
+          <img src="assets/images/banh-1.png" alt="Bánh sinh nhật có cánh cửa đóng" class="cake-img door-closed active" id="cake-closed-img">
+          <img src="assets/images/banh-2.png" alt="Bánh sinh nhật cửa đã mở" class="cake-img door-open" id="cake-open-img">
+          
+          <!-- Tap Door Target Highlight Area -->
+          <div class="door-tap-target" id="door-target" title="Gõ vào cánh cửa">
+            <div class="tap-pulse"></div>
+            <div class="hand-pointer">👆</div>
+          </div>
+        </div>
+
+        <div class="cake-hint-bubble">
+          <span>Gõ vào cánh cửa gỗ trên bánh nè! 🚪✨</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCENE 2, 3, 4: GẶP MÈO MILE & ĐỐI THOẠI ================= -->
+    <section id="scene-dialogue" class="scene">
+      <!-- Comic Dialogue Box (Manga style speech bubble) -->
+      <div class="dialogue-box-container">
+        <div class="comic-speech-bubble" id="speech-bubble">
+          <div class="character-name-tag">🐾 Mile:</div>
+          <p class="bubble-text" id="bubble-text">...</p>
+          <div class="bubble-tail"></div>
+        </div>
+      </div>
+
+      <!-- Character Stage (Mile's Poses) -->
+      <div class="character-stage">
+        <!-- Pose 2: Hello (Scene 2) -->
+        <img src="assets/images/hello.png" alt="Mèo Mile vẫy tay chào" class="cat-character-img" id="cat-hello">
+        
+        <!-- Pose 3: Thinking / Asking Birthday (Scene 3) -->
+        <img src="assets/images/hoi-sinh-nhat.png" alt="Mèo Mile chống cằm suy nghĩ" class="cat-character-img" id="cat-thinking">
+        
+        <!-- Pose 4: Holding Bouquet (Scene 4) -->
+        <img src="assets/images/meo-cam-hoa.png" alt="Mèo Mile cầm bó hoa tươi" class="cat-character-img" id="cat-with-flowers">
+      </div>
+
+      <!-- Interactive Actions / Choices -->
+      <div class="actions-container" id="actions-container">
+        <!-- Scene 2 Action: Tiếp tục -->
+        <div class="action-group" id="actions-scene-2">
+          <button class="comic-btn primary-btn bounce-btn" id="btn-intro-next">
+            <span>Chào Mile nha! 🐾</span>
+          </button>
+        </div>
+
+        <!-- Scene 3 Action: Xác nhận sinh nhật -->
+        <div class="action-group" id="actions-scene-3">
+          <button class="comic-btn primary-btn" id="btn-birthday-yes">
+            <span>Phải rồi! 🎉</span>
+          </button>
+          <button class="comic-btn evasive-btn" id="btn-birthday-no">
+            <span>Không phải đâu 😜</span>
+          </button>
+        </div>
+
+        <!-- Scene 4 Action: Nhận quà -->
+        <div class="action-group" id="actions-scene-4">
+          <button class="comic-btn primary-btn pulse-glow" id="btn-gift-accept">
+            <span>Nhận chứ! 💐</span>
+          </button>
+          <button class="comic-btn evasive-btn" id="btn-gift-decline">
+            <span>Không nhận 🙈</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCENE 5: HOA PHÓNG TO & GỢI Ý BỨC THƯ ================= -->
+    <section id="scene-5" class="scene">
+      <div class="flower-zoom-stage">
+        <!-- Big Bouquet with envelope on top (Zoomed & Overflowing) -->
+        <div class="floating-flower-wrapper" id="flower-card-trigger">
+          <img src="assets/images/bo-hoa.png" alt="Bó hoa sinh nhật rực rỡ" class="flower-big-img">
+          
+          <!-- Exact Letter Target & Animated Pointing Hand directly pointing at wax seal -->
+          <div class="letter-target-indicator" id="letter-target-indicator">
+            <!-- Pulsing Halo on Red Wax Seal -->
+            <div class="wax-target-pulse"></div>
+            
+            <!-- Pointing Hand positioned directly touching the letter/seal -->
+            <div class="pointing-hand-wrapper">
+              <div class="pointing-finger">👆</div>
+              <div class="pointing-cue-tag">
+                <span class="envelope-icon">💌</span>
+                <span>Bấm vào bức thư nè!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini Guide Mile at corner pointing towards bouquet -->
+        <div class="mini-guide-container">
+          <div class="mini-guide-cat">
+            <img src="assets/images/bieu-cam-1.png" alt="Mèo Mile chỉ dẫn" class="mini-cat-img">
+          </div>
+          <div class="mini-speech-bubble">
+            <p>Có vẻ như cậu ấy có để lại <b>1 bức thư</b> được gài trên bó hoa cho cậu đấy! Cậu bấm vào bức thư xem thử đi! 💌✨</p>
+            <div class="mini-tail"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= SCENE 6: POPUP BỨC THƯ MỞ RA ================= -->
+  <div class="letter-modal-backdrop" id="letter-modal">
+    <div class="letter-modal-container">
+      
+      <!-- Envelope Animation Component -->
+      <div class="envelope-assembly" id="envelope-assembly">
+        <div class="envelope-back"></div>
+        <div class="letter-paper" id="letter-paper">
+          
+          <!-- VINTAGE PARCHMENT BIRTHDAY LETTER -->
+          <div class="letter-inner-content">
+            <div class="letter-decorative-corner top-left">❦</div>
+            <div class="letter-decorative-corner top-right">❦</div>
+            
+            <div class="letter-header">
+              <div class="letter-postmark">
+                <span class="postmark-date">SPECIAL DAY</span>
+                <span class="postmark-circle">🎂</span>
+              </div>
+              <h2 class="letter-title">Happy Birthday! 🎈</h2>
+              <div class="letter-divider">✦ ✦ ✦</div>
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- NỘI DUNG BỨC THƯ: Bạn có thể sửa trực tiếp câu từ dưới đây -->
+            <!-- ======================================================== -->
+            <div class="letter-body-text">
+              <p>Nếu đã xem đến đây thì Khôi chúc Hương có một ngày sinh nhật thật nhiều niềm vui, luôn rạng rỡ, ngập tràn tiếng cười và nhận được thật nhiều tình yêu thương.</p>
+              
+              <p>Bước sang tuổi mới, mong rằng mọi điều may mắn, hạnh phúc nhất sẽ đến với Hương. Chúc cho những ước mơ, hoài bão và dự định của Hương đều sẽ từng bước trở thành hiện thực thật trọn vẹn nhé! ✨</p>
+              
+              <p>Dù có bất cứ chuyện gì xảy ra, Hương hãy luôn nhớ mỉm cười và tự tin vào chính mình nha! ✨</p>
+            </div>
+            <!-- ======================================================== -->
+
+            <div class="letter-bottom-actions">
+              <button class="comic-btn celebration-btn" id="btn-confetti-more">
+                <span>Tung hoa chúc mừng! 🎊</span>
+              </button>
+              <button class="comic-btn outline-btn" id="btn-replay-journey">
+                <span>Xem lại từ đầu 🔄</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+        
+        <!-- Flap and Wax Seal -->
+        <div class="envelope-flap" id="envelope-flap"></div>
+        <div class="envelope-front-pocket"></div>
+        
+        <!-- Red Wax Seal Button to click -->
+        <div class="wax-seal" id="wax-seal-btn" title="Chạm để mở niêm phong sáp">
+          <div class="wax-inner">
+            <span class="wax-symbol">HBD</span>
+          </div>
+          <div class="wax-hint">Chạm để mở thư ✉️</div>
+        </div>
+      </div>
+
+      <!-- Close Modal Button -->
+      <button class="modal-close-btn" id="btn-close-letter" aria-label="Đóng thư">✕</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
